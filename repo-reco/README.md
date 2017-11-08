@@ -1,3 +1,28 @@
+<!-- Outline for gem:
+1. Check to see if there is an internet connection - If there isn't, let the user know and exit program
+
+2. (If there is an internet connection) Greet user and have them sign in to github
+
+3. Check users github and outoputs a numerical value to the commandline for the amount of repositories the user has
+
+* Research a safe number for repository cloning - A number that wont crash the the average machine
+
+4. If the user has more than 'X' repositories associated with their github, give the user options as to how many repsoitories they would like to download
+
+* Perhaps give the user an option to download based on daterange or what have you.
+
+5. Display progress bar? (Stretch goal)
+
+5. Once cloning has come to an end, alert the user and exit
+
+Necessary tools?
+1. github Ruby API: https://github.com/octokit/octokit.rb
+
+2.Check for interenet connectio https://stackoverflow.com/questions/2385186/check-if-internet-connection-exists-with-ruby -->
+
+
+
+
 # Repo::Reco
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/repo/reco`. To experiment with that code, run `bin/console` for an interactive prompt.
