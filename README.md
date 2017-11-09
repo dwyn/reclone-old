@@ -20,8 +20,13 @@ Necessary tools?
 
 2.Check for interenet connectio https://stackoverflow.com/questions/2385186/check-if-internet-connection-exists-with-ruby -->
 
-
-
+Frameworks to think about
+Clamp
+Thor
+tty gem
+tty prompt
+tty progress bar
+Awesome lists (Awesome Ruby)
 
 # Repo::Reco
 
