@@ -1,4 +1,4 @@
-class RepoReco::CLI
+class Reclone::CLI
   def call
     exit unless up?
     log_in

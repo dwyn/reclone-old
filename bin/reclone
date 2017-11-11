@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 require "bundler/setup"
-require "repo_reco"
+require "reclone"
 
-RepoReco::CLI.new.call
+Reclone::CLI.new.call
