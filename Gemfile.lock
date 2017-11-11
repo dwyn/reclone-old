@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    repo_reco (0.0.1)
+    reclone (0.0.1)
       net-ping
       octokit (~> 4.0)
       pry
@@ -48,7 +48,7 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.15)
   rake (~> 10.0)
-  repo_reco!
+  clone!
   rspec (~> 3.0)
 
 BUNDLED WITH

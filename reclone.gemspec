@@ -1,17 +1,17 @@
 # coding: utf-8
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "repo_reco/version"
+require "reclone/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "repo_reco"
-  spec.version       = RepoReco::VERSION
+  spec.name          = "reclone"
+  spec.version       = Reclone::VERSION
   spec.authors       = ["<dwyn>"]
   spec.email         = ["<dwayne.harmon@gmail.com>"]
 
   spec.summary       = %q{Just a simple gem to reclone repositories. (Comes in handy if you have a new machine).}
   spec.description   = %q{Recover repositories.}
-  spec.homepage      = "https://github.com/dwyn/repo-reco"
+  spec.homepage      = "https://github.com/dwyn/reclone"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'

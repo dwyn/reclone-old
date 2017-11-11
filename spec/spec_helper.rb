@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "repo/reco"
+require "reclone"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

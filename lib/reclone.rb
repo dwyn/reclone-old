@@ -1,6 +1,6 @@
-require_relative "./repo_reco/version.rb"
-require_relative "./repo_reco/cli.rb"
-require_relative "repo_reco/user.rb"
+require_relative "./reclone/version.rb"
+require_relative "./reclone/cli.rb"
+require_relative "reclone/user.rb"
 
 require 'pry'
 require 'octokit'
