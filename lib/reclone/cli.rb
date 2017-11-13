@@ -1,6 +1,11 @@
 require 'pathname'
+require 'git'
 
 class Reclone::CLI
+  @current_user = ""
+  @current_user_repositories = []
+  @clone_directory = ""
+
   def call
     exit unless up?
     log_in
@@ -10,8 +15,8 @@ class Reclone::CLI
     Net::Ping::External.new("www.google.com").ping?
   end
 
-  def file_dir_or_symlink_exists?(path_to_file)
-    File.exist?(path_to_file) || File.symlink?(path_to_file)
+  def directory_exists?(directory)
+    Dir.exists?(directory)
   end
 
   def  log_in
@@ -22,22 +27,26 @@ class Reclone::CLI
     puts "Awesome. Please enter your password."
     user_password = gets.strip
 
+    puts "Great. Now what directory would you like to clone to?"
+    puts "For example: /Users/user_name/user_repo_folder/"
+    @clone_directory = gets.strip
+
     client = Octokit::Client.new(:login => username, :password => user_password )
-
-    Octokit.auto_paginate = true
-    test = []
-    temp_directory = ""
-
-    client.repositories.each do |repository|
-      
-      temp_directory = Dir.pwd + repository.name
-
-      if file_dir_or_symlink_exists?(temp_directory)
+    # Octokit.auto_paginate = true
+    @current_user = client.user
+  end
+    
+  #WORK ON CLONE METHOD!!!
+  def recloner
+    @current_user.repositories.each do |repository|
+      temp_directory = "/Users/dwyn/Development/code#/{repository.name}"
+      if directory_exists?(temp_directory)
         puts "The directory #{temp_directory} already exists"
         puts "...moving on"
         puts " "
-      else 
-        git clone repository.html_url
+        binding.pry
+      else
+        Git.clone(repository.clone_url, repository.name, :path )
       end 
       full_name = repository[:full_name]
       has_push_access = repository[:permissions][:push]
@@ -67,10 +76,20 @@ end
 
 
 
+# def clone(repository, name, opts = {})
+# @path = opts[:path] || '.'
+# clone_dir = opts[:path] ? File.join(@path, name) : name
 
+# arr_opts = []
+# arr_opts << "--bare" if opts[:bare]
+# arr_opts << "-o" << opts[:remote] if opts[:remote]
+# arr_opts << "--depth" << opts[:depth].to_i if opts[:depth] && opts[:depth].to_i > 0
 
+# arr_opts << '--'
+# arr_opts << repository
+# arr_opts << clone_dir
 
-  # def main_menu
-  #   puts "Hello user"
-  #   log_in
-  # end
+# command('clone', arr_opts)
+
+# opts[:bare] ? {:repository => clone_dir} : {:working_directory => clone_dir}
+# end

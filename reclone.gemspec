@@ -38,4 +38,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "pry"
   spec.add_dependency "tty"
   spec.add_dependency "clamp"
+  spec.add_dependency "git"
 end
