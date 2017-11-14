@@ -37,6 +37,7 @@ class Reclone::CLI
   end
     
   #WORK ON CLONE METHOD!!!
+  #SEE EXAMPLE CODE BELLOOOOOWWWW
   def recloner
     @current_user.repositories.each do |repository|
       temp_directory = "/Users/dwyn/Development/code#/{repository.name}"
@@ -47,6 +48,7 @@ class Reclone::CLI
         binding.pry
       else
         Git.clone(repository.clone_url, repository.name, :path )
+        # Git.clone(URI, NAME, :path => '/tmp/checkout')
       end 
       full_name = repository[:full_name]
       has_push_access = repository[:permissions][:push]
@@ -60,13 +62,7 @@ class Reclone::CLI
 
       puts "User has #{access_type} access to #{full_name}."
     end
-
-
-
-
-
-
-
+    
     puts "good bye"
 
   end
