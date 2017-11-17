@@ -27,7 +27,7 @@ class Reclone::CLI
 
     puts "Awesome. Please enter your password."
     user_password = gets.strip
-
+    # DO SOMETHING ABOUT BAD CREDENTIALS!!!
     puts "Great. Now what directory would you like to clone to?"
     puts "For example: /Users/user_name/user_repo_folder/"
     @clone_directory = gets.strip
@@ -39,17 +39,17 @@ class Reclone::CLI
   #WORK ON CLONE METHOD!!!
   #SEE EXAMPLE CODE BELLOOOOOWWWW
   def recloner
+    temp_directory = ""
     @current_user.repositories.each do |repository|
-      binding.pry
-      temp_directory = "/Users/dwyn/Development/code/{repository.name}"
+      temp_directory = "/Users/dwyn/Development/code/#{repository.name}"
       if directory_exists?(temp_directory)
         puts "The directory #{temp_directory} already exists"
         puts "...moving on"
         puts " "
-        binding.pry
+        # binding.pry
       else
-        Git.clone(repository.clone_url, repository.name, :path )
-        # Git.clone(URI, NAME, :path => '/tmp/checkout')
+        puts "#{repository.name} Cloned!" if Git.clone(repository.clone_url, repository.name, :path => temp_directory )
+        # Git.clone(URI, NAME, :path => '/tmp/checkout') I cant believe even left myself an example!!!
       end 
       full_name = repository[:full_name]
       has_push_access = repository[:permissions][:push]
@@ -59,7 +59,8 @@ class Reclone::CLI
         else
           "read-only"
         end
-        binding.pry
+
+        # binding.pry
 
       puts "User has #{access_type} access to #{full_name}."
     end
