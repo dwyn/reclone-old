@@ -9,6 +9,7 @@ class Reclone::CLI
   def call
     exit unless up?
     log_in
+    recloner
 	end
 
   def up?
@@ -31,16 +32,16 @@ class Reclone::CLI
     puts "For example: /Users/user_name/user_repo_folder/"
     @clone_directory = gets.strip
 
-    client = Octokit::Client.new(:login => username, :password => user_password )
+    @current_user = Octokit::Client.new(:login => username, :password => user_password )
     # Octokit.auto_paginate = true
-    @current_user = client.user
   end
     
   #WORK ON CLONE METHOD!!!
   #SEE EXAMPLE CODE BELLOOOOOWWWW
   def recloner
     @current_user.repositories.each do |repository|
-      temp_directory = "/Users/dwyn/Development/code#/{repository.name}"
+      binding.pry
+      temp_directory = "/Users/dwyn/Development/code/{repository.name}"
       if directory_exists?(temp_directory)
         puts "The directory #{temp_directory} already exists"
         puts "...moving on"
