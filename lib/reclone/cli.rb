@@ -41,6 +41,7 @@ class Reclone::CLI
   def recloner
     temp_directory = ""
     @current_user.repositories.each do |repository|
+      binding.pry
       temp_directory = "/Users/dwyn/Development/code/#{repository.name}"
       if directory_exists?(temp_directory)
         puts "The directory #{temp_directory} already exists"
