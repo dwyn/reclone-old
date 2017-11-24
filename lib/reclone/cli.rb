@@ -8,8 +8,11 @@ class Reclone::CLI
 
   def call
     exit unless up?
-    log_in
+    descreet_login
+    # log_in
     recloner
+
+    
 	end
 
   def up?
@@ -68,6 +71,14 @@ class Reclone::CLI
     
     puts "good bye"
 
+  end
+
+  def descreet_login
+    Octokit.configure do |c|
+      c.login = 'dwyn'
+      c.password = 'dwyn@1618'
+      @current_user = Octokit::Client.user
+    end
   end
 
 end
