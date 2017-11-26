@@ -1,5 +1,5 @@
 require 'pathname'
-require 'git'
+# require 'git'
 
 class Reclone::CLI
   @current_user = ""
@@ -8,11 +8,10 @@ class Reclone::CLI
 
   def call
     exit unless up?
-    descreet_login
-    # log_in
-    recloner
+    log_in
+    recloner   
 
-    
+    Octokit.auto_paginate = false
 	end
 
   def up?
@@ -23,34 +22,48 @@ class Reclone::CLI
     Dir.exists?(directory)
   end
 
-  def  log_in
-    puts "Hello user"; sleep 1
-    puts "Please enter your user name."
-    username = gets.strip
+  def log_in
+    # puts "Hello user"; sleep 1
+    # puts "Please enter your user name."
+    # username = gets.strip
 
-    puts "Awesome. Please enter your password."
-    user_password = gets.strip
-    # DO SOMETHING ABOUT BAD CREDENTIALS!!!
-    puts "Great. Now what directory would you like to clone to?"
-    puts "For example: /Users/user_name/user_repo_folder/"
-    @clone_directory = gets.strip
+    # puts "Awesome. Please enter your password."
+    # user_password = gets.strip
+    # # DO SOMETHING ABOUT BAD CREDENTIALS!!!
+    # puts "Great. Now what directory would you like to clone to?"
+    # puts "For example: /Users/user_name/user_repo_folder/"
+    # @clone_directory = gets.strip
 
-    @current_user = Octokit::Client.new(:login => username, :password => user_password )
-    # Octokit.auto_paginate = true
+    client = Octokit::Client.new(:login: "dwyn", oauth_token: "dwyn@1618" )
+    repos = client.repositories("dwyn", {sort: :pushed_at})
+    binding.pry
+    @current_user = client.user
+    @current_user_repositories = repos
   end
-    
-  #WORK ON CLONE METHOD!!!
-  #SEE EXAMPLE CODE BELLOOOOOWWWW
+
+# #repositories(user = nil, options = {}) ⇒ Array<Sawyer::Resource>
+# Also known as: list_repositories, list_repos, repos
+
+  
   def recloner
-    temp_directory = ""
+    ratelimit           = Octokit.ratelimit
+    ratelimit_remaining = Octokit.rate_limit.remaining
+    puts "Rate Limit Remaining: #{ratelimit_remaining} / #{ratelimit}"
+    puts
+    
+    # temp_directory = ""
+    repos = Octokit.repositories("dwyn", {sort: :pushed_at})
+    binding.pry
+
+    
     @current_user.all_repositories.each do |repository|
-      binding.pry
+
       temp_directory = "/Users/dwyn/Development/code/#{repository.name}"
       if directory_exists?(temp_directory)
         puts "The directory #{temp_directory} already exists"
         puts "...moving on"
         puts " "
-        # binding.pry
+        binding.pry
       else
         puts "#{repository.name} Cloned!" if Git.clone(repository.clone_url, repository.name, :path => temp_directory )
         # Git.clone(URI, NAME, :path => '/tmp/checkout') I cant believe even left myself an example!!!
@@ -71,14 +84,6 @@ class Reclone::CLI
     
     puts "good bye"
 
-  end
-
-  def descreet_login
-    Octokit.configure do |c|
-      c.login = 'dwyn'
-      c.password = 'dwyn@1618'
-      @current_user = Octokit::Client.user
-    end
   end
 
 end
