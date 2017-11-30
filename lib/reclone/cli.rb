@@ -1,5 +1,5 @@
 require 'pathname'
-# require 'git'
+
 
 class Reclone::CLI
   @current_user = ""
@@ -23,6 +23,8 @@ class Reclone::CLI
   end
 
   def log_in
+    YAML.load(File.open(File.join(File.dirname(__FILE__), 'data.yaml')))
+    binding.pry
     # puts "Hello user"; sleep 1
     # puts "Please enter your user name."
     # username = gets.strip
