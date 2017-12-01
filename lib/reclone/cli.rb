@@ -1,6 +1,3 @@
-require 'pathname'
-
-
 class Reclone::CLI
   @current_user = ""
   @current_user_repositories = []
@@ -23,8 +20,7 @@ class Reclone::CLI
   end
 
   def log_in
-    YAML.load(File.open(File.join(File.dirname(__FILE__), 'data.yaml')))
-    binding.pry
+    # YAML.load(File.open(File.join(File.dirname(__FILE__), 'data.yaml')))
     # puts "Hello user"; sleep 1
     # puts "Please enter your user name."
     # username = gets.strip
@@ -36,7 +32,7 @@ class Reclone::CLI
     # puts "For example: /Users/user_name/user_repo_folder/"
     # @clone_directory = gets.strip
 
-    client = Octokit::Client.new(:login: "dwyn", oauth_token: "dwyn@1618" )
+    client = Octokit::Client.new(:login: "frxnklin", oauth_token: "dwyndwyn!" )
     repos = client.repositories("dwyn", {sort: :pushed_at})
     binding.pry
     @current_user = client.user

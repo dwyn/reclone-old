@@ -5,3 +5,4 @@ require_relative "reclone/user.rb"
 require 'pry'
 require 'octokit'
 require 'net/ping'
+require 'secure_yaml'

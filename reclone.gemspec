@@ -39,4 +39,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "tty"
   spec.add_dependency "clamp"
   spec.add_dependency "git"
+  spec.add_dependency "secure_yaml"
 end
