@@ -20,6 +20,7 @@ class Reclone::CLI
   end
 
   def log_in
+    #https://goo.gl/UXLeNL
     # YAML.load(File.open(File.join(File.dirname(__FILE__), 'data.yaml')))
     # puts "Hello user"; sleep 1
     # puts "Please enter your user name."
