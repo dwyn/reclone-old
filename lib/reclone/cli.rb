@@ -33,8 +33,8 @@ class Reclone::CLI
     # puts "For example: /Users/user_name/user_repo_folder/"
     # @clone_directory = gets.strip
 
-    client = Octokit::Client.new(:login: "frxnklin", oauth_token: "dwyndwyn!" )
-    repos = client.repositories("dwyn", {sort: :pushed_at})
+    client = Octokit::Client.new(login: "frxnklin", oauth_token: "dwyn1234!" )
+    repos = client.repositories("frxnklin", {sort: :pushed_at})
     binding.pry
     @current_user = client.user
     @current_user_repositories = repos
@@ -50,16 +50,13 @@ class Reclone::CLI
 # Executes cmd in a subshell, returning true if the command was found and ran successfully, false otherwise. An error status is available in $?. The arguments are processed in the same way as for Kernel::exec.
   
   def recloner
-    ratelimit           = Octokit.ratelimit
-    ratelimit_remaining = Octokit.rate_limit.remaining
-    puts "Rate Limit Remaining: #{ratelimit_remaining} / #{ratelimit}"
-    puts
-    #SYSTEM METHOS!
-    # temp_directory = ""
-    repos = Octokit.repositories("dwyn", {sort: :pushed_at})
-    binding.pry
+    # ratelimit           = Octokit.ratelimit
+    # ratelimit_remaining = Octokit.rate_limit.remaining
+    # puts "Rate Limit Remaining: #{ratelimit_remaining} / #{ratelimit}"
+    # puts
 
-    
+    temp_directory = ""
+
     @current_user.all_repositories.each do |repository|
 
       temp_directory = "/Users/dwyn/Development/code/#{repository.name}"
@@ -69,8 +66,7 @@ class Reclone::CLI
         puts " "
         binding.pry
       else
-        puts "#{repository.name} Cloned!" if Git.clone(repository.clone_url, repository.name, :path => temp_directory )
-        # Git.clone(URI, NAME, :path => '/tmp/checkout') I cant believe even left myself an example!!!
+        puts "#{repository.name} Cloned!" if system("echo", "git clone #{repository.uri}") 
       end 
       full_name = repository[:full_name]
       has_push_access = repository[:permissions][:push]
