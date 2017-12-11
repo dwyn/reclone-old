@@ -1,1 +1,2 @@
-# client = Octokit::Client.new(:login: "frxnklin", oauth_token: "dwyndwyn1!" )
+ACCESS_TOKEN: 'my-access-token'
+CLIENT_SECRET: 'my-client-secret'

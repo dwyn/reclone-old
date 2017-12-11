@@ -8,8 +8,18 @@ class Reclone::CLI
     log_in
     recloner   
 
+    secret = YAML.load_file(config)
+    creditials = get_config(secret)
     Octokit.auto_paginate = false
 	end
+
+
+  def get_config(config_hash)
+    config = {
+      :access_token => config_hash['ACCESS_TOKEN'],
+      :client_secret => config_hash['CLIENT_SECRET']
+    }
+  end
 
   def up?
     Net::Ping::External.new("www.google.com").ping?
@@ -66,7 +76,7 @@ class Reclone::CLI
         puts " "
         binding.pry
       else
-        puts "#{repository.name} Cloned!" if system("echo", "git clone #{repository.uri}") 
+        puts "#{repository.name} Cloned!" if exec("git clone #{repository.uri}")
       end 
       full_name = repository[:full_name]
       has_push_access = repository[:permissions][:push]
