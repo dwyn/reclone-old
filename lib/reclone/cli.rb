@@ -1,9 +1,12 @@
+require 'dotenv'
+
 class Reclone::CLI
   @current_user = ""
   @current_user_repositories = []
   @clone_directory = ""
 
   def call
+    Dotenv.load
     exit unless up?
     binding.pry
     log_in
