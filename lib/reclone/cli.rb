@@ -8,8 +8,7 @@ class Reclone::CLI
     log_in
     recloner   
 
-    secret = YAML.load_file(config)
-    creditials = get_config(secret)
+
     Octokit.auto_paginate = false
 	end
 
@@ -101,36 +100,7 @@ end
 
 
 
-########################
-# You don't ever want to commit code with passwords or access tokens (any sensitive data). Typically you grab credentials from environment variables or because this is ruby you could make a yaml file and load your credentials that way. Something like...
-
-# require 'yaml'
-# require 'spotify-client'
-
-# class Beats
-#   def initialize(config)
-#     secret = YAML.load_file(config)
-#     creditials = get_config(secret)
-#     @spotify = Spotify::Client.new(creditials)
-#     ids = track_ids(get_user_playlist)
-#     get_song_attributes(ids)
-#   end
-
-#   def get_config(config_hash)
-#     config = {
-#       :access_token => config_hash['ACCESS_TOKEN'],
-#       :client_secret => config_hash['CLIENT_SECRET']
-#     }
-#   end
-
-#   ...
-# end
-# Where your yaml file would look like:
-
-# ACCESS_TOKEN: 'my-access-token'
-# CLIENT_SECRET: 'my-client-secret'
-
-##########################
+#######################
 # require 'octokit'
 
 # # API 呼び出し回数
