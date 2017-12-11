@@ -5,20 +5,20 @@ class Reclone::CLI
 
   def call
     exit unless up?
+    binding.pry
     log_in
     recloner   
-
 
     Octokit.auto_paginate = false
 	end
 
 
-  def get_config(config_hash)
-    config = {
-      :access_token => config_hash['ACCESS_TOKEN'],
-      :client_secret => config_hash['CLIENT_SECRET']
-    }
-  end
+  # def get_config(acces_token, client_secret)
+  #   config = {
+  #     :access_token => config_hash['ACCESS_TOKEN'],
+  #     :client_secret => config_hash['CLIENT_SECRET']
+  #   }
+  # end
 
   def up?
     Net::Ping::External.new("www.google.com").ping?
@@ -42,9 +42,9 @@ class Reclone::CLI
     # puts "For example: /Users/user_name/user_repo_folder/"
     # @clone_directory = gets.strip
 
-    client = Octokit::Client.new(login: "frxnklin", oauth_token: "dwyn1234!" )
+    client = Octokit::Client.new(login: "ENV[", oauth_token: "dwyn1234!" )
     repos = client.repositories("frxnklin", {sort: :pushed_at})
-    binding.pry
+
     @current_user = client.user
     @current_user_repositories = repos
   end
