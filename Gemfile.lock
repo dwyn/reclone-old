@@ -114,6 +114,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.15)
+  dotenv
   rake (~> 10.0)
   reclone!
   rspec (~> 3.0)

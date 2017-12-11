@@ -6,9 +6,9 @@ class Reclone::CLI
   @clone_directory = ""
 
   def call
-    Dotenv.load
     exit unless up?
-    binding.pry
+    Dotenv.load
+
     log_in
     recloner   
 
@@ -32,6 +32,7 @@ class Reclone::CLI
   end
 
   def log_in
+    Dotenv.load
     #https://goo.gl/UXLeNL
     # YAML.load(File.open(File.join(File.dirname(__FILE__), 'data.yaml')))
     # puts "Hello user"; sleep 1
@@ -45,11 +46,14 @@ class Reclone::CLI
     # puts "For example: /Users/user_name/user_repo_folder/"
     # @clone_directory = gets.strip
 
-    client = Octokit::Client.new(login: "ENV[", oauth_token: "dwyn1234!" )
+    client = Octokit::Client.new(login: "ENV['GIT_USER']", oauth_token: "ENV['GIT_PASSWORD']" )
     repos = client.repositories("frxnklin", {sort: :pushed_at})
-
+    # binding.pry
     @current_user = client.user
     @current_user_repositories = repos
+
+    GO BACK AND TAKE A LOOK AT THE OCTOKIT README!!!
+    USER ISN'T AUTHENTICATING (AND I AM CERTAIN ITS SOMETHING MUY FACILE)
   end
 
 # #repositories(user = nil, options = {}) ⇒ Array<Sawyer::Resource>
