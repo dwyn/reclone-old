@@ -18,9 +18,9 @@ class Reclone::CLI
     Octokit.configure do |c|
       c.login = ENV['GIT_USER']
       c.password = ENV['GIT_PASSWORD']
-      @current_user = Octokit.user
-      binding.pry
     end
+    @current_user = Octokit.user
+    binding.pry
   end
 
   def up?
