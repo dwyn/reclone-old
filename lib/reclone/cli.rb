@@ -1,4 +1,4 @@
-require 'dotenv'
+require 'dotenv/load'
 
 class Reclone::CLI
   @current_user = ""
@@ -6,25 +6,30 @@ class Reclone::CLI
   @clone_directory = ""
 
   def call
-    exit unless up?
-    Dotenv.load
+    up?
+    get_config
 
-    log_in
+    # log_in
     recloner   
-
-    Octokit.auto_paginate = false
 	end
 
 
-  # def get_config(acces_token, client_secret)
-  #   config = {
-  #     :access_token => config_hash['ACCESS_TOKEN'],
-  #     :client_secret => config_hash['CLIENT_SECRET']
-  #   }
-  # end
+  def get_config
+    Octokit.configure do |c|
+      c.login = ENV['GIT_USER']
+      c.password = ENV['GIT_PASSWORD']
+      @current_user = Octokit.user
+      binding.pry
+    end
+  end
 
   def up?
-    Net::Ping::External.new("www.google.com").ping?
+    if Net::Ping::External.new("www.google.com").ping? != true
+      puts "You need an internet connection to run this program..."
+      puts "As if I needed to tell you that."; sleep 1
+      puts "Good bye for now, human."
+      exit
+    end
   end
 
   def directory_exists?(directory)
@@ -32,7 +37,6 @@ class Reclone::CLI
   end
 
   def log_in
-    Dotenv.load
     #https://goo.gl/UXLeNL
     # YAML.load(File.open(File.join(File.dirname(__FILE__), 'data.yaml')))
     # puts "Hello user"; sleep 1
@@ -46,14 +50,11 @@ class Reclone::CLI
     # puts "For example: /Users/user_name/user_repo_folder/"
     # @clone_directory = gets.strip
 
-    client = Octokit::Client.new(login: "ENV['GIT_USER']", oauth_token: "ENV['GIT_PASSWORD']" )
-    repos = client.repositories("frxnklin", {sort: :pushed_at})
-    # binding.pry
-    @current_user = client.user
-    @current_user_repositories = repos
+    # client = Octokit::Client.new(login: "ENV['GIT_USER']", oauth_token: "ENV['GIT_PASSWORD']" )
+    # repos = client.repositories("frxnklin", {sort: :pushed_at})
 
-    GO BACK AND TAKE A LOOK AT THE OCTOKIT README!!!
-    USER ISN'T AUTHENTICATING (AND I AM CERTAIN ITS SOMETHING MUY FACILE)
+    # @current_user = client.user
+    # @current_user_repositories = repos
   end
 
 # #repositories(user = nil, options = {}) ⇒ Array<Sawyer::Resource>
@@ -72,7 +73,6 @@ class Reclone::CLI
     # puts
 
     temp_directory = ""
-
     @current_user.all_repositories.each do |repository|
 
       temp_directory = "/Users/dwyn/Development/code/#{repository.name}"
@@ -92,8 +92,6 @@ class Reclone::CLI
         else
           "read-only"
         end
-
-        # binding.pry
 
       puts "User has #{access_type} access to #{full_name}."
     end
