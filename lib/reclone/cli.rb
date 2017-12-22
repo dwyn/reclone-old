@@ -71,16 +71,19 @@ class Reclone::CLI
     # ratelimit_remaining = Octokit.rate_limit.remaining
     # puts "Rate Limit Remaining: #{ratelimit_remaining} / #{ratelimit}"
     # puts
-
+    array = []
+    
     temp_directory = ""
-    @current_user.all_repositories.each do |repository|
-
+    # Octokit.client.repos({}, query: {type: 'owner'}).each do |repository|
+      Octokit.client.all_repositories.each do |repository|
+      array << repository
+      binding.pry
+      exit
       temp_directory = "/Users/dwyn/Development/code/#{repository.name}"
       if directory_exists?(temp_directory)
         puts "The directory #{temp_directory} already exists"
         puts "...moving on"
         puts " "
-        binding.pry
       else
         puts "#{repository.name} Cloned!" if exec("git clone #{repository.uri}")
       end 
