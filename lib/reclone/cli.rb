@@ -20,7 +20,6 @@ class Reclone::CLI
       c.password = ENV['GIT_PASSWORD']
     end
     @current_user = Octokit.user
-    binding.pry
   end
 
   def up?
@@ -75,7 +74,7 @@ class Reclone::CLI
     
     temp_directory = ""
     # Octokit.client.repos({}, query: {type: 'owner'}).each do |repository|
-      Octokit.client.all_repositories.each do |repository|
+      Octokit.client.all_repositories(auto_traversal: false).each do |repository|
       array << repository
       binding.pry
       exit
@@ -111,14 +110,11 @@ end
 #######################
 # require 'octokit'
 
-# # API 呼び出し回数
 # ratelimit           = Octokit.ratelimit
 # ratelimit_remaining = Octokit.ratelimit_remaining
 # puts "Rate Limit Remaining: #{ratelimit_remaining} / #{ratelimit}"
 # puts
 
-# # インスタンス化
-# # ==== 認証無しの場合
 # repos = Octokit.repositories("komasaru", {sort: :pushed_at})
 # # ==== OAuth 認証の場合
 # #cl = Octokit::Client.new(login: "komasaru", oauth_token: "token_string")
