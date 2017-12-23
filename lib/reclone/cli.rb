@@ -65,6 +65,14 @@ class Reclone::CLI
 # end
 # Executes cmd in a subshell, returning true if the command was found and ran successfully, false otherwise. An error status is available in $?. The arguments are processed in the same way as for Kernel::exec.
   
+  def with_pagination
+    pagination_setting = self.auto_paginate 
+    self.auto_paginate = true
+    yield
+  ensure
+    self.auto_paginate = pagination_setting
+  end
+
   def recloner
     # ratelimit           = Octokit.ratelimit
     # ratelimit_remaining = Octokit.rate_limit.remaining
@@ -74,6 +82,8 @@ class Reclone::CLI
     
     temp_directory = ""
     # Octokit.client.repos({}, query: {type: 'owner'}).each do |repository|
+
+      
       Octokit.client.all_repositories(auto_traversal: false).each do |repository|
       array << repository
       binding.pry
